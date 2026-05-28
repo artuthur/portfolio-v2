@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arthur — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #111;
+      --white: #f5f4f0;
+      --gray: #c8c6c0;
+      --mid: #888;
+      --border: 2px solid var(--black);
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: var(--font-mono); font-size: 14px; line-height: 1.6; cursor: none; }
+
+    /* CURSEUR */
+    #cursor { position: fixed; top: 0; left: 0; width: 18px; height: 18px; background: var(--black); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.15s ease, height 0.15s ease; mix-blend-mode: difference; }
+    #cursor.big { width: 48px; height: 48px; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: var(--gray); border-bottom: var(--border); display: flex; align-items: center; padding: 0 16px; height: 52px; }
+    .nav-logo { width: 36px; height: 36px; border: var(--border); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; font-weight: 800; margin-right: 20px; background: var(--black); color: var(--white); flex-shrink: 0; }
+    .nav-links { display: flex; align-items: stretch; height: 100%; }
+    .nav-links a { display: flex; align-items: center; padding: 0 18px; font-family: var(--font-mono); font-size: 13px; font-weight: 700; text-decoration: none; color: var(--black); border-right: var(--border); transition: background 0.1s; }
+    .nav-links a:first-child { border-left: var(--border); }
+    .nav-links a:hover, .nav-links a.active { background: var(--black); color: var(--white); }
+    .lang-toggle { margin-left: auto; display: flex; border-left: var(--border); height: 100%; }
+    .lang-toggle button { background: none; border: none; padding: 0 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 700; cursor: none; color: var(--black); height: 100%; border-right: var(--border); }
+    .lang-toggle button:last-child { border-right: none; }
+    .lang-toggle button.active { background: var(--black); color: var(--white); }
+
+    /* HERO */
+    #hero { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 52px); border-bottom: var(--border); }
+    .hero-left { padding: 80px 60px; display: flex; flex-direction: column; justify-content: center; border-right: var(--border); }
+    .hero-tag { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; background: var(--black); color: var(--white); display: inline-block; padding: 3px 10px; margin-bottom: 24px; width: fit-content; }
+    .hero-title { font-family: var(--font-display); font-size: clamp(60px, 8vw, 110px); font-weight: 800; line-height: 0.95; margin-bottom: 28px; }
+    .hero-sub { font-size: 15px; max-width: 420px; color: #444; margin-bottom: 48px; line-height: 1.7; }
+    .hero-cta { display: inline-flex; align-items: center; gap: 10px; background: var(--black); color: var(--white); padding: 14px 28px; text-decoration: none; font-family: var(--font-mono); font-size: 13px; font-weight: 700; border: var(--border); transition: background 0.15s, color 0.15s; width: fit-content; }
+    .hero-cta:hover { background: var(--white); color: var(--black); }
+    .hero-right { background: var(--black); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+
+    /* TERMINAL */
+    .terminal-window { background: #1a1a1a; border: 2px solid #444; width: 420px; font-family: var(--font-mono); font-size: 13px; }
+    .terminal-bar { background: #333; border-bottom: 1px solid #444; padding: 8px 14px; display: flex; align-items: center; gap: 8px; }
+    .terminal-dot { width: 11px; height: 11px; border-radius: 50%; background: #555; }
+    .terminal-title { margin-left: 8px; color: #888; font-size: 11px; }
+    .terminal-body { padding: 20px; min-height: 220px; }
+    .terminal-line { color: #aaa; margin-bottom: 6px; }
+    .terminal-line .prompt { color: #4ade80; }
+    .terminal-line .cmd { color: #fff; }
+    .terminal-line .hl { color: #facc15; }
+    .cursor-blink { display: inline-block; width: 8px; height: 14px; background: #4ade80; vertical-align: middle; animation: blink 1s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* QUICK LINKS */
+    .quick-links { border-bottom: var(--border); }
+    .quick-links-label { padding: 20px 32px 12px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .quick-links-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .quick-link-item { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; border-top: var(--border); border-right: var(--border); text-decoration: none; color: var(--black); font-weight: 700; font-size: 14px; transition: background 0.12s; }
+    .quick-link-item:last-child { border-right: none; }
+    .quick-link-item:hover { background: var(--black); color: var(--white); }
+
+    /* SECTION HEADER */
+    .section-header { padding: 60px 60px 20px; border-bottom: var(--border); }
+    .section-header h2 { font-family: var(--font-display); font-size: clamp(36px, 5vw, 64px); font-weight: 800; line-height: 1; }
+    .section-header p { color: var(--mid); margin-top: 8px; font-size: 13px; }
+
+    /* ABOUT */
+    #about { display: grid; grid-template-columns: 1fr 1fr; border-bottom: var(--border); }
+    .about-left { padding: 60px; border-right: var(--border); }
+    .about-left h2 { font-family: var(--font-display); font-size: clamp(36px, 4vw, 56px); font-weight: 800; margin-bottom: 28px; line-height: 1; }
+    .about-left p { font-size: 14px; color: #333; margin-bottom: 16px; line-height: 1.8; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .tag { border: var(--border); padding: 4px 12px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .tag.filled { background: var(--black); color: var(--white); }
+    .about-right { padding: 60px; display: flex; flex-direction: column; justify-content: center; }
+    .info-row { display: flex; border-bottom: 1px solid var(--gray); padding: 14px 0; font-size: 13px; }
+    .info-row:first-child { border-top: 1px solid var(--gray); }
+    .info-label { width: 140px; flex-shrink: 0; font-weight: 700; color: var(--mid); text-transform: uppercase; font-size: 11px; letter-spacing: 0.08em; padding-top: 1px; }
+
+    /* SKILLS */
+    #skills { border-bottom: var(--border); }
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .skill-card { padding: 36px; border-right: var(--border); border-bottom: var(--border); transition: background 0.15s; }
+    .skill-card:nth-child(3n) { border-right: none; }
+    .skill-card:nth-last-child(-n+3) { border-bottom: none; }
+    .skill-icon { font-size: 28px; margin-bottom: 14px; }
+    .skill-name { font-family: var(--font-display); font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .skill-desc { font-size: 12px; color: #555; line-height: 1.7; margin-bottom: 16px; transition: color 0.15s; }
+    .skill-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill { background: var(--gray); padding: 2px 9px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; transition: background 0.15s, color 0.15s; }
+    .skill-card:hover { background: var(--black); color: var(--white); }
+    .skill-card:hover .skill-desc { color: #bbb; }
+    .skill-card:hover .pill { background: #333; color: var(--white); }
+
+    /* PROJECTS */
+    #projects { border-bottom: var(--border); }
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; padding: 40px 40px; background: var(--white); }
+    .project-card { border: var(--border); box-shadow: 5px 5px 0 var(--black); background: var(--white); }
+    .project-card:nth-child(2n) { border-right: var(--border); }
+    .project-card:nth-last-child(-n+2) { border-bottom: var(--border); }
+    .project-window-bar { background: var(--gray); border-bottom: var(--border); padding: 8px 14px; display: flex; align-items: center; gap: 7px; }
+    .win-dot { width: 11px; height: 11px; border-radius: 50%; border: var(--border); background: var(--white); }
+    .win-filename { margin-left: 8px; font-size: 11px; color: var(--mid); }
+    .project-img-placeholder { width: 100%; height: 200px; background: repeating-linear-gradient(45deg, var(--gray), var(--gray) 4px, var(--white) 4px, var(--white) 16px); border-bottom: var(--border); display: flex; align-items: center; justify-content: center; font-size: 40px; }
+    .project-body { padding: 28px; }
+    .project-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+    .project-desc { font-size: 13px; color: #444; line-height: 1.75; margin-bottom: 20px; }
+    .project-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .project-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; border: var(--border); padding: 2px 8px; }
+    .btn-outline { display: inline-flex; align-items: center; gap: 8px; border: var(--border); padding: 10px 20px; font-family: var(--font-mono); font-size: 12px; font-weight: 700; text-decoration: none; color: var(--black); background: var(--white); transition: background 0.12s, color 0.12s; }
+    .btn-outline:hover { background: var(--black); color: var(--white); }
+
+    /* CV */
+    #cv { border-bottom: var(--border); display: grid; grid-template-columns: 1fr 1fr; }
+    .cv-left { padding: 60px; border-right: var(--border); display: flex; flex-direction: column; justify-content: center; }
+    .cv-left h2 { font-family: var(--font-display); font-size: clamp(32px, 4vw, 52px); font-weight: 800; margin-bottom: 16px; }
+    .cv-left p { font-size: 14px; color: #444; line-height: 1.8; margin-bottom: 36px; }
+    .cv-right { padding: 60px; display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(-45deg, var(--gray), var(--gray) 2px, transparent 2px, transparent 14px); }
+    .cv-doc { background: var(--white); border: var(--border); width: 220px; padding: 28px 24px; box-shadow: 8px 8px 0 var(--black); }
+    .cv-doc-top { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--gray); padding-bottom: 14px; }
+    .cv-doc-icon { font-size: 24px; }
+    .cv-doc-title { font-weight: 700; font-size: 13px; }
+    .cv-doc-line { height: 6px; background: var(--gray); margin-bottom: 8px; border-radius: 2px; }
+    .cv-doc-line.short { width: 60%; }
+    .cv-doc-line.medium { width: 80%; }
+    .cv-doc-line.full { width: 100%; }
+
+    /* CONTACT */
+    #contact { border-bottom: var(--border); display: grid; grid-template-columns: 1fr 1fr; }
+    .contact-left { padding: 60px; border-right: var(--border); }
+    .contact-left h2 { font-family: var(--font-display); font-size: clamp(32px, 4vw, 52px); font-weight: 800; margin-bottom: 16px; }
+    .contact-left p { font-size: 14px; color: #444; line-height: 1.8; margin-bottom: 28px; }
+    .contact-links { display: flex; flex-direction: column; gap: 12px; }
+    .contact-link { display: flex; align-items: center; gap: 12px; font-size: 13px; text-decoration: none; color: var(--black); font-weight: 700; border: var(--border); padding: 12px 16px; transition: background 0.12s; }
+    .contact-link:hover { background: var(--black); color: var(--white); }
+    .contact-right { padding: 60px; display: flex; flex-direction: column; gap: 16px; }
+    .contact-right label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+    .contact-right input, .contact-right textarea { width: 100%; border: var(--border); background: var(--white); padding: 12px; font-family: var(--font-mono); font-size: 13px; outline: none; resize: none; }
+    .contact-right input:focus, .contact-right textarea:focus { background: #fffef5; }
+    .contact-submit { background: var(--black); color: var(--white); border: var(--border); padding: 14px 28px; font-family: var(--font-mono); font-size: 13px; font-weight: 700; cursor: none; transition: background 0.12s, color 0.12s; align-self: flex-start; }
+    .contact-submit:hover { background: var(--white); color: var(--black); }
+
+    /* FOOTER */
+    footer { background: var(--black); color: var(--white); display: flex; align-items: center; justify-content: space-between; padding: 20px 40px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    footer a { color: var(--white); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ANIMATIONS */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 860px) {
+      #hero, #about, #cv, #contact { grid-template-columns: 1fr; }
+      .hero-right { min-height: 320px; }
+      .quick-links-grid { grid-template-columns: repeat(2, 1fr); }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .projects-grid { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
+      .skill-card:nth-child(3n) { border-right: var(--border); }
+      .skill-card:nth-child(2n) { border-right: none; }
+      .section-header, .about-left, .cv-left, .contact-left { padding: 40px; }
+      .about-right, .contact-right, .cv-right { padding: 40px; }
+    }
+    @media (max-width: 560px) {
+      .nav-links a { padding: 0 10px; font-size: 11px; }
+      .hero-left { padding: 40px 28px; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .skill-card:nth-child(n) { border-right: none; }
+      .terminal-window { width: 90vw; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">A</div>
+  <div class="nav-links">
+    <a href="#hero" class="active" data-fr="Accueil" data-en="Home">Accueil</a>
+    <a href="#about" data-fr="À propos" data-en="About">À propos</a>
+    <a href="#skills" data-fr="Compétences" data-en="Skills">Compétences</a>
+    <a href="#projects" data-fr="Projets" data-en="Projects">Projets</a>
+    <a href="#cv" data-fr="CV" data-en="Resume">CV</a>
+    <a href="#contact" data-fr="Contact" data-en="Contact">Contact</a>
+  </div>
+  <div class="lang-toggle">
+    <button id="btn-fr" class="active" onclick="setLang('fr')">FR</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left fade-up">
+    <span class="hero-tag" data-fr="Disponible pour emploi — Béthune &amp; alentours" data-en="Open to work — Béthune area &amp; Remote">Disponible pour emploi — Béthune &amp; alentours</span>
+    <h1 class="hero-title">Hello.<br>I'm Arthur</h1>
+    <p class="hero-sub" data-fr="Diplômé BUT Informatique, je me spécialise dans l'administration systèmes &amp; réseaux, le support technique. Rigoureux, curieux et opérationnel dès maintenant." data-en="BUT Informatique graduate (Systems &amp; Networks), I specialise in sysadmin, technical support and virtualisation. Rigorous, curious, and immediately available.">Diplômé BUT Informatique, je me spécialise dans l'administration systèmes &amp; réseaux, le support technique. Rigoureux, curieux et opérationnel dès maintenant.</p>
+    <a href="#projects" class="hero-cta">
+      <span data-fr="Voir mes projets" data-en="See my work">Voir mes projets</span>
+      <span>→</span>
+    </a>
+  </div>
+  <div class="hero-right">
+    <div class="terminal-window">
+      <div class="terminal-bar">
+        <div class="terminal-dot"></div>
+        <div class="terminal-dot"></div>
+        <div class="terminal-dot"></div>
+        <span class="terminal-title">arthur@portfolio ~ $</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="prompt">▶</span> <span class="cmd">whoami</span></div>
+        <div class="terminal-line" style="color:#aaa">Arthur Debacq — Technicien S&amp;R</div>
+        <div class="terminal-line" style="margin-top:10px"><span class="prompt">▶</span> <span class="cmd">cat skills.txt</span></div>
+        <div class="terminal-line" style="color:#aaa"><span class="hl">Systèmes</span> · Win Server · AD · WDS/MDT</div>
+        <div class="terminal-line" style="color:#aaa"><span class="hl">Linux</span>    · Debian · Ubuntu · Bash</div>
+        <div class="terminal-line" style="color:#aaa"><span class="hl">Réseaux</span>  · OSPF · VLAN · pfSense</div>
+        <div class="terminal-line" style="color:#aaa"><span class="hl">DevOps</span>   · Docker · Ansible · Terraform</div>
+        <div class="terminal-line" style="color:#aaa"><span class="hl">Cloud</span>    · GCP · Azure · OVH</div>
+        <div class="terminal-line" style="color:#aaa"><span class="hl">Superv.</span>  · Zabbix · GLPI · GitLab CI</div>
+        <div class="terminal-line" style="margin-top:10px"><span class="prompt">▶</span> <span class="cmd">cat certs.txt</span></div>
+        <div class="terminal-line" style="color:#aaa">✓ Cisco Network Basics (03/2026)</div>
+        <div class="terminal-line" style="color:#aaa">✓ Cisco Network Security (03/2026)</div>
+        <div class="terminal-line" style="color:#aaa">✓ Fortinet NSE 1 &amp; 2 (05/2026)</div>
+        <div class="terminal-line" style="margin-top:10px"><span class="prompt">▶</span> <span class="cmd">status</span></div>
+        <div class="terminal-line" style="color:#4ade80">● Haut-de-France (62/59) · Remote OK</div>
+        <div class="terminal-line" style="margin-top:10px"><span class="prompt">▶</span> <span class="cursor-blink"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK LINKS -->
+<div class="quick-links">
+  <div class="quick-links-label" data-fr="Liens rapides" data-en="Quick links">Liens rapides</div>
+  <div class="quick-links-grid">
+    <a class="quick-link-item" href="#about"><span data-fr="À propos" data-en="About">À propos</span><span>↗</span></a>
+    <a class="quick-link-item" href="#skills"><span data-fr="Compétences" data-en="Skills">Compétences</span><span>↗</span></a>
+    <a class="quick-link-item" href="#projects"><span data-fr="Projets" data-en="Projects">Projets</span><span>↗</span></a>
+    <a class="quick-link-item" href="#contact"><span data-fr="Contact" data-en="Contact">Contact</span><span>↗</span></a>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-left fade-up">
+    <h2 data-fr="Qui suis-je ?" data-en="Who am I?">Qui suis-je ?</h2>
+    <p data-fr="Je m'appelle Arthur Debacq, diplômé du BUT Informatique parcours B (Systèmes, Réseaux et Cybersécurité) à l'IUT A de Lille. Passionné d'infrastructure IT depuis le lycée (spécialité NSI), j'ai construit un profil solide mêlant administration systèmes, réseaux, automatisation et supervision." data-en="My name is Arthur Debacq, graduate of the BUT Informatique SARI track (Systems, Networks and Infrastructure Administration) at IUT A de Lille. Passionate about IT infrastructure since high school (NSI speciality), I've built a strong profile combining sysadmin, networking, automation and monitoring.">Je m'appelle Arthur Debacq, diplômé du BUT Informatique parcours B (Systèmes, Réseaux et Cybersécurité) à l'IUT A de Lille. Passionné d'infrastructure IT depuis le lycée (spécialité NSI), j'ai construit un profil solide mêlant administration systèmes, réseaux, automatisation et supervision.</p>
+    <p data-fr="J'ai eu la chance de réaliser deux stages enrichissants : chez SIRAIL (Crespin, 59) où j'ai déployé WDS/MDT sur un parc de ~100 postes et administré l'Active Directory, puis chez Acteam-IT (Roubaix, 59) où j'ai mis en production une stack Zabbix sur Docker Swarm avec pipeline CI/CD. Je maintiens également un homelab personnel pour rester en veille continue." data-en="I completed two enriching internships: at SIRAIL (Crespin, 59) deploying WDS/MDT on a ~100-workstation estate and managing Active Directory, then at Acteam-IT (Roubaix, 59) where I deployed a Zabbix stack on Docker Swarm with a CI/CD pipeline. I also maintain a personal homelab to stay up to date continuously.">J'ai eu la chance de réaliser deux stages enrichissants : chez SIRAIL (Crespin, 59) où j'ai déployé WDS/MDT sur un parc de ~100 postes et administré l'Active Directory, puis chez Acteam-IT (Roubaix, 59) où j'ai mis en production une stack Zabbix sur Docker Swarm avec pipeline CI/CD. Je maintiens également un homelab personnel pour rester en veille continue.</p>
+    <div class="about-tags">
+      <span class="tag filled">Cybersécurité</span>
+      <span class="tag">Sysadmin</span>
+      <span class="tag">DevOps</span>
+      <span class="tag">Réseaux</span>
+      <span class="tag">Docker</span>
+      <span class="tag filled">Open to work</span>
+    </div>
+  </div>
+  <div class="about-right fade-up">
+    <div class="info-row"><span class="info-label" data-fr="Nom" data-en="Name">Nom</span><span>Arthur Debacq</span></div>
+    <div class="info-row"><span class="info-label" data-fr="Formation" data-en="Education">Formation</span><span>BUT Informatique — IUT A de Lille</span></div>
+    <div class="info-row"><span class="info-label" data-fr="Localisation" data-en="Location">Localisation</span><span>Hauts-de-France (59/62)</span></div>
+    <div class="info-row"><span class="info-label" data-fr="Disponibilité" data-en="Availability">Disponibilité</span><span data-fr="Immédiate" data-en="Immediate">Immédiate</span></div>
+    <div class="info-row"><span class="info-label" data-fr="Langues" data-en="Languages">Langues</span><span>Français (natif) · Anglais B2 · Espagnol B1</span></div>
+    <div class="info-row"><span class="info-label" data-fr="Certifications" data-en="Certifications">Certifications</span><span>Cisco Net. Basics · Cisco Net. Security · Fortinet NSE 1&amp;2</span></div>
+    <div class="info-row"><span class="info-label">Permis</span><span data-fr="Permis B, véhiculé" data-en="Driving license B">Permis B</span></div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header fade-up">
+    <h2 data-fr="Compétences" data-en="Skills">Compétences</h2>
+    <p data-fr="Technologies maîtrisées et domaines d'expertise" data-en="Technologies I work with and areas of expertise">Technologies maîtrisées et domaines d'expertise</p>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card fade-up">
+      <div class="skill-icon">🖥️</div>
+      <div class="skill-name" data-fr="Systèmes" data-en="Systems">Systèmes</div>
+      <p class="skill-desc" data-fr="Administration Windows Server et Linux au quotidien : gestion AD, GPO, déploiement de postes via WDS/MDT et gestion O365." data-en="Day-to-day Windows Server and Linux administration: AD management, GPO, workstation deployment via WDS/MDT and O365 management.">Administration Windows Server et Linux au quotidien : gestion AD, GPO, déploiement de postes via WDS/MDT et gestion O365.</p>
+      <div class="skill-pills"><span class="pill">Win Server 2019/22</span><span class="pill">AD / GPO</span><span class="pill">WDS/MDT</span><span class="pill">O365</span><span class="pill">Debian</span><span class="pill">Ubuntu</span></div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name" data-fr="Réseaux" data-en="Networking">Réseaux</div>
+      <p class="skill-desc" data-fr="Conception et administration réseau : routage OSPF, segmentation VLAN, VPN et sécurisation des flux via firewall." data-en="Network design and administration: OSPF routing, VLAN segmentation, VPN and traffic security via firewall.">Conception et administration réseau : routage OSPF, segmentation VLAN, VPN et sécurisation des flux via firewall.</p>
+      <div class="skill-pills"><span class="pill">Cisco IOS</span><span class="pill">OSPF/RIP</span><span class="pill">VLAN</span><span class="pill">pfSense</span><span class="pill">Stormshield</span><span class="pill">OpenVPN</span><span class="pill">WireGuard</span></div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">🐳</div>
+      <div class="skill-name" data-fr="Virtualisation &amp; Cloud" data-en="Virtualisation &amp; Cloud">Virtualisation &amp; Cloud</div>
+      <p class="skill-desc" data-fr="Conteneurisation Docker en production, homelab VirtualBox et déploiement cloud multi-fournisseurs." data-en="Docker containerisation in production, VirtualBox homelab, and multi-provider cloud deployment.">Conteneurisation Docker en production, homelab VirtualBox et déploiement cloud multi-fournisseurs.</p>
+      <div class="skill-pills"><span class="pill">Docker</span><span class="pill">Docker Swarm</span><span class="pill">Traefik</span><span class="pill">VirtualBox</span><span class="pill">GCP</span><span class="pill">Azure</span><span class="pill">OVH</span></div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">⚙️</div>
+      <div class="skill-name" data-fr="Automatisation &amp; DevOps" data-en="Automation &amp; DevOps">Automatisation &amp; DevOps</div>
+      <p class="skill-desc" data-fr="Infrastructure as Code et automatisation des déploiements : Ansible pour la configuration, Terraform pour le provisionning, CI/CD GitLab." data-en="Infrastructure as Code and deployment automation: Ansible for configuration, Terraform for provisioning, GitLab CI/CD.">Infrastructure as Code et automatisation des déploiements : Ansible pour la configuration, Terraform pour le provisionning, CI/CD GitLab.</p>
+      <div class="skill-pills"><span class="pill">Ansible</span><span class="pill">Terraform</span><span class="pill">Vagrant</span><span class="pill">Bash</span><span class="pill">CI/CD GitLab</span></div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">📊</div>
+      <div class="skill-name" data-fr="Supervision &amp; Outils" data-en="Monitoring &amp; Tools">Supervision &amp; Outils</div>
+      <p class="skill-desc" data-fr="Supervision d'infrastructure en temps réel avec Zabbix, gestion de parc et ticketing GLPI, versioning Git/GitLab." data-en="Real-time infrastructure monitoring with Zabbix, GLPI asset management and ticketing, Git/GitLab versioning.">Supervision d'infrastructure en temps réel avec Zabbix, gestion de parc et ticketing GLPI, versioning Git/GitLab.</p>
+      <div class="skill-pills"><span class="pill">Zabbix</span><span class="pill">GLPI</span><span class="pill">Git</span><span class="pill">GitLab</span></div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name" data-fr="Dev &amp; Bases de données" data-en="Dev &amp; Databases">Dev &amp; Bases de données</div>
+      <p class="skill-desc" data-fr="Scripting Python pour l'automatisation, SQL et PostgreSQL pour la gestion et la sécurisation de données en production." data-en="Python scripting for automation, SQL and PostgreSQL for production data management and security.">Scripting Python pour l'automatisation, SQL et PostgreSQL pour la gestion et la sécurisation de données en production.</p>
+      <div class="skill-pills"><span class="pill">Python</span><span class="pill">SQL</span><span class="pill">PostgreSQL</span><span class="pill">Bash</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header fade-up">
+    <h2 data-fr="Expériences &amp; Projets" data-en="Experience &amp; Projects">Expériences &amp; Projets</h2>
+    <p data-fr="Stages professionnels et réalisations techniques en formation" data-en="Professional internships and technical projects from training">Stages professionnels et réalisations techniques en formation</p>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card fade-up">
+      <div class="project-window-bar"><div class="win-dot"></div><div class="win-dot"></div><span class="win-filename">sirail-stage-2025.log</span></div>
+      <div class="project-img-placeholder">🏭</div>
+      <div class="project-body">
+        <h3 class="project-title" data-fr="Stage — Technicien S&amp;R · SIRAIL" data-en="Internship — Sysadmin · SIRAIL">Stage — Technicien S&amp;R · SIRAIL</h3>
+        <p style="font-size:11px;color:var(--mid);margin-bottom:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em">Mai – Septembre 2025 · Crespin (59) · 4 mois</p>
+        <p class="project-desc" data-fr="Infrastructure multi-sites Windows, parc de ~100 postes. Déploiement WDS/MDT automatisé réduisant le temps de masterisation de 3h à moins de 20 min (gain estimé 200h sur le parc). Support N1/N2 via GLPI, administration AD/GPO et durcissement des images Windows 10/11. Rédaction de 8 procédures adoptées comme référentiel officiel." data-en="Multi-site Windows infrastructure, ~100-workstation estate. Automated WDS/MDT deployment cutting imaging time from 3h to under 20 min (estimated saving of 200h across the fleet). N1/N2 support via GLPI, AD/GPO administration, Windows 10/11 image hardening. Authored 8 procedures adopted as the official IT reference.">Infrastructure multi-sites Windows, parc de ~100 postes. Déploiement WDS/MDT automatisé réduisant le temps de masterisation de 3h à moins de 20 min (gain estimé 200h sur le parc). Support N1/N2 via GLPI, administration AD/GPO et durcissement des images Windows 10/11. Rédaction de 8 procédures adoptées comme référentiel officiel.</p>
+        <div class="project-meta"><span class="project-tag">WDS/MDT</span><span class="project-tag">Active Directory</span><span class="project-tag">GPO</span><span class="project-tag">GLPI</span><span class="project-tag">Win Server</span></div>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-window-bar"><div class="win-dot"></div><div class="win-dot"></div><span class="win-filename">acteam-stage-2024.log</span></div>
+      <div class="project-img-placeholder">🐳</div>
+      <div class="project-body">
+        <h3 class="project-title" data-fr="Stage — Admin S&amp;R · Acteam-IT" data-en="Internship — Sysadmin · Acteam-IT">Stage — Admin S&amp;R · Acteam-IT</h3>
+        <p style="font-size:11px;color:var(--mid);margin-bottom:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em">Avril – Juin 2024 · Roubaix (59) · 3 mois</p>
+        <p class="project-desc" data-fr="ESN spécialisée infrastructure et Cloud, équipe de 10 personnes. Déploiement Zabbix sur Docker Swarm (3 nœuds) avec dashboards, alertes et pipeline CI/CD GitLab pour les mises à jour sans interruption. Mise en prod de 2 instances web HTTPS derrière Traefik (TLS automatique). Durcissement SSH avec clés ed25519, désactivation root, bastion SSH. Rédaction de 5 procédures adoptées en référentiel interne." data-en="Infrastructure and Cloud ESN, 10-person team. Zabbix deployment on Docker Swarm (3 nodes) with dashboards, alerts and GitLab CI/CD pipeline for zero-downtime updates. Production deployment of 2 HTTPS web instances behind Traefik (automatic TLS). SSH hardening with ed25519 keys, root disabled, SSH bastion. Authored 5 procedures adopted as internal reference.">ESN spécialisée infrastructure et Cloud, équipe de 10 personnes. Déploiement Zabbix sur Docker Swarm (3 nœuds) avec dashboards, alertes et pipeline CI/CD GitLab pour les mises à jour sans interruption. Mise en prod de 2 instances web HTTPS derrière Traefik (TLS automatique). Durcissement SSH avec clés ed25519, désactivation root, bastion SSH.</p>
+        <div class="project-meta"><span class="project-tag">Zabbix</span><span class="project-tag">Docker Swarm</span><span class="project-tag">Traefik</span><span class="project-tag">CI/CD GitLab</span><span class="project-tag">SSH</span></div>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-window-bar"><div class="win-dot"></div><div class="win-dot"></div><span class="win-filename">infra-reseau-complete.yaml</span></div>
+      <div class="project-img-placeholder">🌐</div>
+      <div class="project-body">
+        <h3 class="project-title" data-fr="Évolution d'infrastructure réseau complète" data-en="Full Network Infrastructure Project">Évolution d'infrastructure réseau complète</h3>
+        <p style="font-size:11px;color:var(--mid);margin-bottom:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em" data-fr="Projet de formation — IUT A de Lille" data-en="Academic project — IUT A de Lille">Projet de formation — IUT A de Lille</p>
+        <p class="project-desc" data-fr="Adressage IPv4/v6, segmentation VLAN, routage OSPF sur Cisco IOS. Déploiement DNS, DHCP, LDAP/Active Directory. Sécurisation pfSense/Stormshield (ACL, règles firewall). Automatisation complète via Ansible, Terraform et Vagrant." data-en="IPv4/v6 addressing, VLAN segmentation, OSPF routing on Cisco IOS. DNS, DHCP, LDAP/Active Directory deployment. pfSense/Stormshield security (ACL, firewall rules). Full automation with Ansible, Terraform and Vagrant.">Adressage IPv4/v6, segmentation VLAN, routage OSPF sur Cisco IOS. Déploiement DNS, DHCP, LDAP/Active Directory. Sécurisation pfSense/Stormshield (ACL, règles firewall). Automatisation complète via Ansible, Terraform et Vagrant.</p>
+        <div class="project-meta"><span class="project-tag">Cisco IOS</span><span class="project-tag">OSPF</span><span class="project-tag">pfSense</span><span class="project-tag">Ansible</span><span class="project-tag">Terraform</span></div>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-window-bar"><div class="win-dot"></div><div class="win-dot"></div><span class="win-filename">linux-services-stack.sh</span></div>
+      <div class="project-img-placeholder">🐧</div>
+      <div class="project-body">
+        <h3 class="project-title" data-fr="Stack de services applicatifs Linux" data-en="Linux Application Services Stack">Stack de services applicatifs Linux</h3>
+        <p style="font-size:11px;color:var(--mid);margin-bottom:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em" data-fr="Projet de formation — IUT A de Lille" data-en="Academic project — IUT A de Lille">Projet de formation — IUT A de Lille</p>
+        <p class="project-desc" data-fr="Serveur Debian from scratch. Reverse proxy Traefik avec HTTPS/TLS automatique (Let's Encrypt). SSH durci avec clés ed25519, Fail2Ban, désactivation de l'authentification par mot de passe. PostgreSQL sécurisé avec backup automatisé et rotation des logs." data-en="Debian server from scratch. Traefik reverse proxy with automatic HTTPS/TLS (Let's Encrypt). Hardened SSH with ed25519 keys, Fail2Ban, password auth disabled. Secured PostgreSQL with automated backups and log rotation.">Serveur Debian from scratch. Reverse proxy Traefik avec HTTPS/TLS automatique (Let's Encrypt). SSH durci avec clés ed25519, Fail2Ban, désactivation de l'authentification par mot de passe. PostgreSQL sécurisé avec backup automatisé et rotation des logs.</p>
+        <div class="project-meta"><span class="project-tag">Debian</span><span class="project-tag">Docker</span><span class="project-tag">Traefik</span><span class="project-tag">PostgreSQL</span><span class="project-tag">Bash</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CV -->
+<section id="cv">
+  <div class="cv-left fade-up">
+    <h2 data-fr="Mon CV" data-en="My Resume">Mon CV</h2>
+    <p data-fr="Retrouvez l'ensemble de mon parcours, mes formations et mes expériences dans mon CV. Disponible en téléchargement au format PDF." data-en="Find my full background, education and experience in my resume. Available for download as a PDF.">Retrouvez l'ensemble de mon parcours, mes formations et mes expériences dans mon CV. Disponible en téléchargement au format PDF.</p>
+    <a href="res/CV_DEBACQ_Arthur_v4_portfolio.pdf" class="hero-cta" download>
+      <span data-fr="⬇ Télécharger le CV (PDF)" data-en="⬇ Download Resume (PDF)">⬇ Télécharger le CV (PDF)</span>
+    </a>
+  </div>
+  <div class="cv-right">
+    <div class="cv-doc">
+      <div class="cv-doc-top"><span class="cv-doc-icon">📄</span><span class="cv-doc-title">CV_DEBACQ_Arthur</span></div>
+      <div class="cv-doc-line full"></div>
+      <div class="cv-doc-line short"></div>
+      <div class="cv-doc-line medium" style="margin-top:14px"></div>
+      <div class="cv-doc-line full"></div>
+      <div class="cv-doc-line medium"></div>
+      <div class="cv-doc-line full" style="margin-top:14px"></div>
+      <div class="cv-doc-line short"></div>
+      <div class="cv-doc-line medium"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left fade-up">
+    <h2 data-fr="Me contacter" data-en="Get in touch">Me contacter</h2>
+    <p data-fr="Une offre, une question, une opportunité de collaboration ? Je suis disponible et réactif. N'hésitez pas à m'écrire, je vous répondrai dans les plus brefs délais." data-en="A job offer, a question, a collaboration opportunity? I'm available and responsive. Don't hesitate to reach out, I'll get back to you promptly.">Une offre, une question, une opportunité de collaboration ? Je suis disponible et réactif. N'hésitez pas à m'écrire, je vous répondrai dans les plus brefs délais.</p>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:arthur.debacq@hotmail.fr">✉ arthur.debacq@hotmail.fr</a>
+      <a class="contact-link" href="https://www.linkedin.com/in/arthur-debacq-a17143233/" target="_blank">🔗 linkedin.com/in/arthur-debacq-a17143233/</a>
+      <a class="contact-link" href="https://github.com/artuthur" target="_blank">💻 github.com/artuthur</a>
+    </div>
+  </div>
+  <div class="contact-right fade-up">
+    <div id="form-success" style="display:none; border:2px solid var(--black); padding:24px; background:var(--black); color:var(--white);">
+      <p style="font-weight:700; font-size:14px;" data-fr="✓ Message envoyé ! Je vous répondrai dès que possible." data-en="✓ Message sent! I'll get back to you as soon as possible.">✓ Message envoyé ! Je vous répondrai dès que possible.</p>
+    </div>
+    <div id="form-error" style="display:none; border:2px solid var(--black); padding:24px;">
+      <p style="font-weight:700; font-size:14px; color:#c00;" data-fr="✗ Une erreur est survenue. Veuillez réessayer ou m'écrire directement par email." data-en="✗ Something went wrong. Please try again or email me directly.">✗ Une erreur est survenue. Veuillez réessayer ou m'écrire directement par email.</p>
+    </div>
+    <div id="contact-form">
+      <div style="margin-bottom:16px">
+        <label data-fr="Votre nom" data-en="Your name">Votre nom</label>
+        <input id="cf-name" type="text" placeholder="John Doe" autocomplete="name" />
+      </div>
+      <div style="margin-bottom:16px">
+        <label data-fr="Votre email" data-en="Your email">Votre email</label>
+        <input id="cf-email" type="email" placeholder="john@example.com" autocomplete="email" />
+      </div>
+      <div style="margin-bottom:16px">
+        <label data-fr="Votre message" data-en="Your message">Votre message</label>
+        <textarea id="cf-message" rows="5" placeholder="..."></textarea>
+      </div>
+      <button class="contact-submit" id="cf-submit" onclick="submitForm()" data-fr="Envoyer →" data-en="Send →">Envoyer →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Arthur Debacq</span>
+  <span data-fr="Portfolio — Systèmes &amp; Réseaux" data-en="Portfolio — Systems &amp; Networks">Portfolio — Systèmes &amp; Réseaux</span>
+  <a href="#hero" data-fr="↑ Retour en haut" data-en="↑ Back to top">↑ Retour en haut</a>
+</footer>
+
+<script>
+  /* CURSOR */
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .skill-card, .project-card, .quick-link-item').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+  });
+
+  /* LANG SWITCH */
+  let lang = 'fr';
+  function setLang(l) {
+    lang = l;
+    document.querySelectorAll('[data-fr],[data-en]').forEach(el => {
+      const val = el.getAttribute('data-' + l);
+      if (val) el.innerHTML = val;
+    });
+    document.getElementById('btn-fr').classList.toggle('active', l === 'fr');
+    document.getElementById('btn-en').classList.toggle('active', l === 'en');
+    document.documentElement.lang = l;
+  }
+
+  /* SCROLL ANIMATIONS */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  /* CONTACT FORM — Formspree */
+  async function submitForm() {
+    const name    = document.getElementById('cf-name').value.trim();
+    const email   = document.getElementById('cf-email').value.trim();
+    const message = document.getElementById('cf-message').value.trim();
+    const btn     = document.getElementById('cf-submit');
+    const successBox = document.getElementById('form-success');
+    const errorBox   = document.getElementById('form-error');
+
+    // Basic validation
+    if (!name || !email || !message) {
+      const msg = lang === 'fr' ? 'Veuillez remplir tous les champs.' : 'Please fill in all fields.';
+      alert(msg);
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      const msg = lang === 'fr' ? 'Adresse email invalide.' : 'Invalid email address.';
+      alert(msg);
+      return;
+    }
+
+    // Loading state
+    btn.textContent = lang === 'fr' ? 'Envoi en cours…' : 'Sending…';
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+
+    try {
+      const FORMSPREE_URL = 'https://formspree.io/f/mlgvarnb';
+
+      const res = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name, email, message })
+      });
+
+      if (res.ok) {
+        document.getElementById('contact-form').style.display = 'none';
+        errorBox.style.display = 'none';
+        successBox.style.display = 'block';
+      } else {
+        throw new Error('Server error');
+      }
+    } catch (err) {
+      errorBox.style.display = 'block';
+      btn.textContent = lang === 'fr' ? 'Envoyer →' : 'Send →';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }
+
+  /* ACTIVE NAV */
+  const sections = ['hero','about','skills','projects','cv','contact'];
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = 'hero';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 80) current = id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>

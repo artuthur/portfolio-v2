@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Arthur — Portfolio</title>
+  <title>Arthur — IT Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
   <style>
@@ -20,7 +20,7 @@
     html { scroll-behavior: smooth; }
     body { background: var(--white); color: var(--black); font-family: var(--font-mono); font-size: 14px; line-height: 1.6; cursor: none; }
 
-    /* CURSEUR */
+    /* CURSOR */
     #cursor { position: fixed; top: 0; left: 0; width: 18px; height: 18px; background: var(--black); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.15s ease, height 0.15s ease; mix-blend-mode: difference; }
     #cursor.big { width: 48px; height: 48px; }
 
@@ -118,6 +118,20 @@
     .btn-outline { display: inline-flex; align-items: center; gap: 8px; border: var(--border); padding: 10px 20px; font-family: var(--font-mono); font-size: 12px; font-weight: 700; text-decoration: none; color: var(--black); background: var(--white); transition: background 0.12s, color 0.12s; }
     .btn-outline:hover { background: var(--black); color: var(--white); }
 
+    /* LABS */
+    #labs { border-bottom: var(--border); }
+    .labs-intro { padding: 28px 60px 0; font-size: 13px; color: #444; line-height: 1.8; max-width: 900px; }
+    .status { margin-left: auto; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 8px; border: var(--border); background: var(--white); }
+    .status.done { background: var(--black); color: var(--white); }
+    .status.wip { background: repeating-linear-gradient(45deg, var(--white), var(--white) 4px, var(--gray) 4px, var(--gray) 8px); }
+    .project-sub { font-size: 11px; color: var(--mid); margin-bottom: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+    .lab-points { list-style: none; margin-bottom: 20px; font-size: 13px; color: #444; line-height: 1.7; }
+    .lab-points li { padding-left: 16px; position: relative; margin-bottom: 4px; }
+    .lab-points li::before { content: "›"; position: absolute; left: 0; font-weight: 700; color: var(--black); }
+    .roadmap-list { list-style: none; margin-bottom: 20px; }
+    .roadmap-list li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--gray); font-size: 13px; }
+    .roadmap-list li span:last-child { color: var(--mid); font-size: 11px; text-align: right; }
+
     /* CV */
     #cv { border-bottom: var(--border); display: grid; grid-template-columns: 1fr 1fr; }
     .cv-left { padding: 60px; border-right: var(--border); display: flex; flex-direction: column; justify-content: center; }
@@ -167,6 +181,7 @@
       .skill-card:nth-child(3n) { border-right: var(--border); }
       .skill-card:nth-child(2n) { border-right: none; }
       .section-header, .about-left, .cv-left, .contact-left { padding: 40px; }
+      .labs-intro { padding: 24px 40px 0; }
       .about-right, .contact-right, .cv-right { padding: 40px; }
     }
     @media (max-width: 560px) {
@@ -189,7 +204,8 @@
     <a href="#hero" class="active" data-fr="Accueil" data-en="Home">Accueil</a>
     <a href="#about" data-fr="À propos" data-en="About">À propos</a>
     <a href="#skills" data-fr="Compétences" data-en="Skills">Compétences</a>
-    <a href="#projects" data-fr="Projets" data-en="Projects">Projets</a>
+    <a href="#labs" data-fr="Labs" data-en="Labs">Labs</a>
+    <a href="#projects" data-fr="Parcours" data-en="Experience">Parcours</a>
     <a href="#cv" data-fr="CV" data-en="Resume">CV</a>
     <a href="#contact" data-fr="Contact" data-en="Contact">Contact</a>
   </div>
@@ -203,10 +219,10 @@
 <section id="hero">
   <div class="hero-left fade-up">
     <span class="hero-tag" data-fr="Disponible pour emploi — Béthune &amp; alentours" data-en="Open to work — Béthune area &amp; Remote">Disponible pour emploi — Béthune &amp; alentours</span>
-    <h1 class="hero-title">Hello.<br>I'm Arthur</h1>
-    <p class="hero-sub" data-fr="Diplômé BUT Informatique, je me spécialise dans l'administration systèmes &amp; réseaux, le support technique. Rigoureux, curieux et opérationnel dès maintenant." data-en="BUT Informatique graduate (Systems &amp; Networks), I specialise in sysadmin, technical support and virtualisation. Rigorous, curious, and immediately available.">Diplômé BUT Informatique, je me spécialise dans l'administration systèmes &amp; réseaux, le support technique. Rigoureux, curieux et opérationnel dès maintenant.</p>
-    <a href="#projects" class="hero-cta">
-      <span data-fr="Voir mes projets" data-en="See my work">Voir mes projets</span>
+    <h1 class="hero-title">Hello.<br>I'm Arthur<br>Debacq.</h1>
+    <p class="hero-sub" data-fr="Technicien systèmes &amp; réseaux, diplômé du BUT Informatique. Deux stages en entreprise, et en parallèle des labs d'infrastructure documentés sur GitHub : Ansible, CI/CD GitLab, PKI interne, et Kubernetes en cours. Opérationnel dès maintenant." data-en="Systems &amp; network technician, BUT Informatique graduate. Two company internships, plus infrastructure labs documented on GitHub: Ansible, GitLab CI/CD, internal PKI, and Kubernetes in progress. Available now.">Technicien systèmes &amp; réseaux, diplômé du BUT Informatique. Deux stages en entreprise, et en parallèle des labs d'infrastructure documentés sur GitHub : Ansible, CI/CD GitLab, PKI interne, et Kubernetes en cours. Opérationnel dès maintenant.</p>
+    <a href="#labs" class="hero-cta">
+      <span data-fr="Voir mes labs" data-en="See my labs">Voir mes labs</span>
       <span>→</span>
     </a>
   </div>
@@ -216,24 +232,27 @@
         <div class="terminal-dot"></div>
         <div class="terminal-dot"></div>
         <div class="terminal-dot"></div>
-        <span class="terminal-title">arthur@portfolio ~ $</span>
+        <span class="terminal-title">arthur@sysadmin ~ $</span>
       </div>
       <div class="terminal-body">
         <div class="terminal-line"><span class="prompt">▶</span> <span class="cmd">whoami</span></div>
         <div class="terminal-line" style="color:#aaa">Arthur Debacq — Technicien S&amp;R</div>
         <div class="terminal-line" style="margin-top:10px"><span class="prompt">▶</span> <span class="cmd">cat skills.txt</span></div>
-        <div class="terminal-line" style="color:#aaa"><span class="hl">Systèmes</span> · Win Server · AD · WDS/MDT</div>
-        <div class="terminal-line" style="color:#aaa"><span class="hl">Linux</span>    · Debian · Ubuntu · Bash</div>
+        <div class="terminal-line" style="color:#aaa"><span class="hl">Systèmes</span> · Win Server · AD · Debian</div>
         <div class="terminal-line" style="color:#aaa"><span class="hl">Réseaux</span>  · OSPF · VLAN · pfSense</div>
-        <div class="terminal-line" style="color:#aaa"><span class="hl">DevOps</span>   · Docker · Ansible · Terraform</div>
-        <div class="terminal-line" style="color:#aaa"><span class="hl">Cloud</span>    · GCP · Azure · OVH</div>
-        <div class="terminal-line" style="color:#aaa"><span class="hl">Superv.</span>  · Zabbix · GLPI · GitLab CI</div>
+        <div class="terminal-line" style="color:#aaa"><span class="hl">IaC</span>      · Ansible · Vagrant · Terraform</div>
+        <div class="terminal-line" style="color:#aaa"><span class="hl">CI/CD</span>    · GitLab CE · Runner · Docker</div>
+        <div class="terminal-line" style="color:#aaa"><span class="hl">Superv.</span>  · Zabbix · GLPI</div>
+        <div class="terminal-line" style="margin-top:10px"><span class="prompt">▶</span> <span class="cmd">ls ~/labs</span></div>
+        <div class="terminal-line" style="color:#aaa"><span class="hl">✓</span> lab-infra-as-code</div>
+        <div class="terminal-line" style="color:#aaa"><span class="hl">✓</span> lab-cicd-pipeline</div>
+        <div class="terminal-line" style="color:#aaa"><span style="color:#60a5fa">…</span> lab-k8s-gitops <span style="color:#666">(en cours)</span></div>
         <div class="terminal-line" style="margin-top:10px"><span class="prompt">▶</span> <span class="cmd">cat certs.txt</span></div>
         <div class="terminal-line" style="color:#aaa">✓ Cisco Network Basics (03/2026)</div>
         <div class="terminal-line" style="color:#aaa">✓ Cisco Network Security (03/2026)</div>
         <div class="terminal-line" style="color:#aaa">✓ Fortinet NSE 1 &amp; 2 (05/2026)</div>
         <div class="terminal-line" style="margin-top:10px"><span class="prompt">▶</span> <span class="cmd">status</span></div>
-        <div class="terminal-line" style="color:#4ade80">● Haut-de-France (62/59) · Remote OK</div>
+        <div class="terminal-line" style="color:#4ade80">● Open to work — Béthune (62) · Remote OK</div>
         <div class="terminal-line" style="margin-top:10px"><span class="prompt">▶</span> <span class="cursor-blink"></span></div>
       </div>
     </div>
@@ -246,7 +265,7 @@
   <div class="quick-links-grid">
     <a class="quick-link-item" href="#about"><span data-fr="À propos" data-en="About">À propos</span><span>↗</span></a>
     <a class="quick-link-item" href="#skills"><span data-fr="Compétences" data-en="Skills">Compétences</span><span>↗</span></a>
-    <a class="quick-link-item" href="#projects"><span data-fr="Projets" data-en="Projects">Projets</span><span>↗</span></a>
+    <a class="quick-link-item" href="#labs"><span data-fr="Labs GitHub" data-en="GitHub labs">Labs GitHub</span><span>↗</span></a>
     <a class="quick-link-item" href="#contact"><span data-fr="Contact" data-en="Contact">Contact</span><span>↗</span></a>
   </div>
 </div>
@@ -255,25 +274,28 @@
 <section id="about">
   <div class="about-left fade-up">
     <h2 data-fr="Qui suis-je ?" data-en="Who am I?">Qui suis-je ?</h2>
-    <p data-fr="Je m'appelle Arthur Debacq, diplômé du BUT Informatique parcours B (Systèmes, Réseaux et Cybersécurité) à l'IUT A de Lille. Passionné d'infrastructure IT depuis le lycée (spécialité NSI), j'ai construit un profil solide mêlant administration systèmes, réseaux, automatisation et supervision." data-en="My name is Arthur Debacq, graduate of the BUT Informatique SARI track (Systems, Networks and Infrastructure Administration) at IUT A de Lille. Passionate about IT infrastructure since high school (NSI speciality), I've built a strong profile combining sysadmin, networking, automation and monitoring.">Je m'appelle Arthur Debacq, diplômé du BUT Informatique parcours B (Systèmes, Réseaux et Cybersécurité) à l'IUT A de Lille. Passionné d'infrastructure IT depuis le lycée (spécialité NSI), j'ai construit un profil solide mêlant administration systèmes, réseaux, automatisation et supervision.</p>
-    <p data-fr="J'ai eu la chance de réaliser deux stages enrichissants : chez SIRAIL (Crespin, 59) où j'ai déployé WDS/MDT sur un parc de ~100 postes et administré l'Active Directory, puis chez Acteam-IT (Roubaix, 59) où j'ai mis en production une stack Zabbix sur Docker Swarm avec pipeline CI/CD. Je maintiens également un homelab personnel pour rester en veille continue." data-en="I completed two enriching internships: at SIRAIL (Crespin, 59) deploying WDS/MDT on a ~100-workstation estate and managing Active Directory, then at Acteam-IT (Roubaix, 59) where I deployed a Zabbix stack on Docker Swarm with a CI/CD pipeline. I also maintain a personal homelab to stay up to date continuously.">J'ai eu la chance de réaliser deux stages enrichissants : chez SIRAIL (Crespin, 59) où j'ai déployé WDS/MDT sur un parc de ~100 postes et administré l'Active Directory, puis chez Acteam-IT (Roubaix, 59) où j'ai mis en production une stack Zabbix sur Docker Swarm avec pipeline CI/CD. Je maintiens également un homelab personnel pour rester en veille continue.</p>
+    <p data-fr="Je m'appelle Arthur Debacq, diplômé du BUT Informatique parcours SARI (Systèmes, Réseaux et Administration des Infrastructures) à l'IUT A de Lille. Passionné d'infrastructure IT depuis le lycée (spécialité NSI), j'ai construit un profil solide mêlant administration systèmes, réseaux, automatisation et supervision." data-en="My name is Arthur Debacq, graduate of the BUT Informatique SARI track (Systems, Networks and Infrastructure Administration) at IUT A de Lille. Passionate about IT infrastructure since high school (NSI speciality), I've built a strong profile combining sysadmin, networking, automation and monitoring.">Je m'appelle Arthur Debacq, diplômé du BUT Informatique parcours SARI (Systèmes, Réseaux et Administration des Infrastructures) à l'IUT A de Lille. Passionné d'infrastructure IT depuis le lycée (spécialité NSI), j'ai construit un profil solide mêlant administration systèmes, réseaux, automatisation et supervision.</p>
+    <p data-fr="J'ai eu la chance de réaliser deux stages enrichissants : chez SIRAIL (Crespin, 59) où j'ai déployé WDS/MDT sur un parc de ~100 postes et administré l'Active Directory, puis chez Acteam-IT (Roubaix, 59) où j'ai mis en production une stack Zabbix sur Docker Swarm avec pipeline CI/CD." data-en="I completed two internships: at SIRAIL (Crespin, 59) deploying WDS/MDT on a ~100-workstation estate and managing Active Directory, then at Acteam-IT (Roubaix, 59) where I deployed a Zabbix stack on Docker Swarm with a CI/CD pipeline.">J'ai réalisé deux stages : chez SIRAIL (Crespin, 59) où j'ai déployé WDS/MDT sur un parc de ~100 postes et administré l'Active Directory, puis chez Acteam-IT (Roubaix, 59) où j'ai mis en production une stack Zabbix sur Docker Swarm avec pipeline CI/CD.</p>
+    <p data-fr="Depuis, je continue de monter en compétence en autodidacte avec une série de labs publiés sur GitHub. Chaque lab reproduit un besoin réel d'entreprise, se reconstruit entièrement depuis zéro et est documenté comme en production : README, choix techniques justifiés, journal de bord du dépannage." data-en="Since then, I've kept building skills on my own through a series of labs published on GitHub. Each lab reproduces a real business need, can be rebuilt entirely from scratch, and is documented as in production: README, justified technical choices, troubleshooting log.">Depuis, je continue de monter en compétence en autodidacte avec une série de labs publiés sur GitHub. Chaque lab reproduit un besoin réel d'entreprise, se reconstruit entièrement depuis zéro et est documenté comme en production : README, choix techniques justifiés, journal de bord du dépannage.</p>
     <div class="about-tags">
-      <span class="tag filled">Cybersécurité</span>
+      <span class="tag filled">BUT Informatique SARI</span>
       <span class="tag">Sysadmin</span>
-      <span class="tag">DevOps</span>
-      <span class="tag">Réseaux</span>
+      <span class="tag">Ansible</span>
+      <span class="tag">CI/CD GitLab</span>
       <span class="tag">Docker</span>
+      <span class="tag">Kubernetes</span>
       <span class="tag filled">Open to work</span>
     </div>
   </div>
   <div class="about-right fade-up">
     <div class="info-row"><span class="info-label" data-fr="Nom" data-en="Name">Nom</span><span>Arthur Debacq</span></div>
-    <div class="info-row"><span class="info-label" data-fr="Formation" data-en="Education">Formation</span><span>BUT Informatique — IUT A de Lille</span></div>
+    <div class="info-row"><span class="info-label" data-fr="Formation" data-en="Education">Formation</span><span>BUT Informatique SARI — IUT A de Lille</span></div>
     <div class="info-row"><span class="info-label" data-fr="Localisation" data-en="Location">Localisation</span><span>Hauts-de-France (59/62)</span></div>
     <div class="info-row"><span class="info-label" data-fr="Disponibilité" data-en="Availability">Disponibilité</span><span data-fr="Immédiate" data-en="Immediate">Immédiate</span></div>
     <div class="info-row"><span class="info-label" data-fr="Langues" data-en="Languages">Langues</span><span>Français (natif) · Anglais B2 · Espagnol B1</span></div>
     <div class="info-row"><span class="info-label" data-fr="Certifications" data-en="Certifications">Certifications</span><span>Cisco Net. Basics · Cisco Net. Security · Fortinet NSE 1&amp;2</span></div>
-    <div class="info-row"><span class="info-label">Permis</span><span data-fr="Permis B, véhiculé" data-en="Driving license B">Permis B</span></div>
+    <div class="info-row"><span class="info-label" data-fr="Mobilité" data-en="Mobility">Mobilité</span><span data-fr="Transports en commun · Béthune, Bruay, Lille" data-en="Public transport · Béthune, Bruay, Lille">Transports en commun · Béthune, Bruay, Lille</span></div>
+    <div class="info-row"><span class="info-label">GitHub</span><span><a href="https://github.com/artuthur" target="_blank" style="color:inherit">github.com/artuthur</a></span></div>
   </div>
 </section>
 
@@ -287,46 +309,103 @@
     <div class="skill-card fade-up">
       <div class="skill-icon">🖥️</div>
       <div class="skill-name" data-fr="Systèmes" data-en="Systems">Systèmes</div>
-      <p class="skill-desc" data-fr="Administration Windows Server et Linux au quotidien : gestion AD, GPO, déploiement de postes via WDS/MDT et gestion O365." data-en="Day-to-day Windows Server and Linux administration: AD management, GPO, workstation deployment via WDS/MDT and O365 management.">Administration Windows Server et Linux au quotidien : gestion AD, GPO, déploiement de postes via WDS/MDT et gestion O365.</p>
-      <div class="skill-pills"><span class="pill">Win Server 2019/22</span><span class="pill">AD / GPO</span><span class="pill">WDS/MDT</span><span class="pill">O365</span><span class="pill">Debian</span><span class="pill">Ubuntu</span></div>
+      <p class="skill-desc" data-fr="Administration Windows Server et Linux : Active Directory, GPO, masterisation WDS/MDT, O365, et serveurs Debian montés from scratch (Nginx, PostgreSQL)." data-en="Windows Server and Linux administration: Active Directory, GPO, WDS/MDT imaging, O365, and Debian servers built from scratch (Nginx, PostgreSQL).">Administration Windows Server et Linux : Active Directory, GPO, masterisation WDS/MDT, O365, et serveurs Debian montés from scratch (Nginx, PostgreSQL).</p>
+      <div class="skill-pills"><span class="pill">Win Server 2019/22</span><span class="pill">AD / GPO</span><span class="pill">WDS/MDT</span><span class="pill">O365</span><span class="pill">Debian</span><span class="pill">Ubuntu</span><span class="pill">PostgreSQL</span></div>
     </div>
     <div class="skill-card fade-up">
       <div class="skill-icon">🌐</div>
       <div class="skill-name" data-fr="Réseaux" data-en="Networking">Réseaux</div>
-      <p class="skill-desc" data-fr="Conception et administration réseau : routage OSPF, segmentation VLAN, VPN et sécurisation des flux via firewall." data-en="Network design and administration: OSPF routing, VLAN segmentation, VPN and traffic security via firewall.">Conception et administration réseau : routage OSPF, segmentation VLAN, VPN et sécurisation des flux via firewall.</p>
-      <div class="skill-pills"><span class="pill">Cisco IOS</span><span class="pill">OSPF/RIP</span><span class="pill">VLAN</span><span class="pill">pfSense</span><span class="pill">Stormshield</span><span class="pill">OpenVPN</span><span class="pill">WireGuard</span></div>
+      <p class="skill-desc" data-fr="Conception et administration réseau : routage OSPF, segmentation VLAN, VPN, load balancing HAProxy et isolation des flux par firewall." data-en="Network design and administration: OSPF routing, VLAN segmentation, VPN, HAProxy load balancing and traffic isolation with firewalls.">Conception et administration réseau : routage OSPF, segmentation VLAN, VPN, load balancing HAProxy et isolation des flux par firewall.</p>
+      <div class="skill-pills"><span class="pill">Cisco IOS</span><span class="pill">OSPF/RIP</span><span class="pill">VLAN</span><span class="pill">HAProxy</span><span class="pill">pfSense</span><span class="pill">Stormshield</span><span class="pill">WireGuard</span></div>
     </div>
     <div class="skill-card fade-up">
       <div class="skill-icon">🐳</div>
-      <div class="skill-name" data-fr="Virtualisation &amp; Cloud" data-en="Virtualisation &amp; Cloud">Virtualisation &amp; Cloud</div>
-      <p class="skill-desc" data-fr="Conteneurisation Docker en production, homelab VirtualBox et déploiement cloud multi-fournisseurs." data-en="Docker containerisation in production, VirtualBox homelab, and multi-provider cloud deployment.">Conteneurisation Docker en production, homelab VirtualBox et déploiement cloud multi-fournisseurs.</p>
-      <div class="skill-pills"><span class="pill">Docker</span><span class="pill">Docker Swarm</span><span class="pill">Traefik</span><span class="pill">VirtualBox</span><span class="pill">GCP</span><span class="pill">Azure</span><span class="pill">OVH</span></div>
+      <div class="skill-name" data-fr="Virtualisation &amp; Conteneurs" data-en="Virtualisation &amp; Containers">Virtualisation &amp; Conteneurs</div>
+      <p class="skill-desc" data-fr="Labs multi-VM sous VMware Workstation et VirtualBox, conteneurs Docker en production, registre d'images privé, et cluster Kubernetes kubeadm en cours de montage." data-en="Multi-VM labs on VMware Workstation and VirtualBox, Docker containers in production, private image registry, and a kubeadm Kubernetes cluster being built.">Labs multi-VM sous VMware Workstation et VirtualBox, conteneurs Docker en production, registre d'images privé, et cluster Kubernetes kubeadm en cours de montage.</p>
+      <div class="skill-pills"><span class="pill">VMware Workstation</span><span class="pill">VirtualBox</span><span class="pill">Docker</span><span class="pill">Docker Swarm</span><span class="pill">Traefik</span><span class="pill">Kubernetes (en cours)</span></div>
     </div>
     <div class="skill-card fade-up">
       <div class="skill-icon">⚙️</div>
-      <div class="skill-name" data-fr="Automatisation &amp; DevOps" data-en="Automation &amp; DevOps">Automatisation &amp; DevOps</div>
-      <p class="skill-desc" data-fr="Infrastructure as Code et automatisation des déploiements : Ansible pour la configuration, Terraform pour le provisionning, CI/CD GitLab." data-en="Infrastructure as Code and deployment automation: Ansible for configuration, Terraform for provisioning, GitLab CI/CD.">Infrastructure as Code et automatisation des déploiements : Ansible pour la configuration, Terraform pour le provisionning, CI/CD GitLab.</p>
-      <div class="skill-pills"><span class="pill">Ansible</span><span class="pill">Terraform</span><span class="pill">Vagrant</span><span class="pill">Bash</span><span class="pill">CI/CD GitLab</span></div>
+      <div class="skill-name" data-fr="Infrastructure as Code" data-en="Infrastructure as Code">Infrastructure as Code</div>
+      <p class="skill-desc" data-fr="Infrastructures entièrement décrites en code : rôles Ansible idempotents, secrets chiffrés avec Ansible Vault, conformité ansible-lint en profil production, VMs provisionnées par Vagrant." data-en="Infrastructure fully described as code: idempotent Ansible roles, secrets encrypted with Ansible Vault, ansible-lint production profile compliance, VMs provisioned with Vagrant.">Infrastructures entièrement décrites en code : rôles Ansible idempotents, secrets chiffrés avec Ansible Vault, conformité ansible-lint en profil production, VMs provisionnées par Vagrant.</p>
+      <div class="skill-pills"><span class="pill">Ansible</span><span class="pill">Ansible Vault</span><span class="pill">ansible-lint</span><span class="pill">Vagrant</span><span class="pill">Terraform</span><span class="pill">Bash</span></div>
     </div>
     <div class="skill-card fade-up">
-      <div class="skill-icon">📊</div>
-      <div class="skill-name" data-fr="Supervision &amp; Outils" data-en="Monitoring &amp; Tools">Supervision &amp; Outils</div>
-      <p class="skill-desc" data-fr="Supervision d'infrastructure en temps réel avec Zabbix, gestion de parc et ticketing GLPI, versioning Git/GitLab." data-en="Real-time infrastructure monitoring with Zabbix, GLPI asset management and ticketing, Git/GitLab versioning.">Supervision d'infrastructure en temps réel avec Zabbix, gestion de parc et ticketing GLPI, versioning Git/GitLab.</p>
-      <div class="skill-pills"><span class="pill">Zabbix</span><span class="pill">GLPI</span><span class="pill">Git</span><span class="pill">GitLab</span></div>
+      <div class="skill-icon">🔁</div>
+      <div class="skill-name" data-fr="CI/CD &amp; Supervision" data-en="CI/CD &amp; Monitoring">CI/CD &amp; Supervision</div>
+      <p class="skill-desc" data-fr="GitLab CE auto-hébergé avec runner, pipeline lint / tests / build / déploiement automatique, API REST GitLab, supervision Zabbix et gestion de parc GLPI." data-en="Self-hosted GitLab CE with runner, lint / test / build / automatic deployment pipeline, GitLab REST API, Zabbix monitoring and GLPI asset management.">GitLab CE auto-hébergé avec runner, pipeline lint / tests / build / déploiement automatique, API REST GitLab, supervision Zabbix et gestion de parc GLPI.</p>
+      <div class="skill-pills"><span class="pill">GitLab CE</span><span class="pill">GitLab Runner</span><span class="pill">GitLab CI</span><span class="pill">Git</span><span class="pill">Zabbix</span><span class="pill">GLPI</span><span class="pill">Python</span></div>
     </div>
     <div class="skill-card fade-up">
-      <div class="skill-icon">🗄️</div>
-      <div class="skill-name" data-fr="Dev &amp; Bases de données" data-en="Dev &amp; Databases">Dev &amp; Bases de données</div>
-      <p class="skill-desc" data-fr="Scripting Python pour l'automatisation, SQL et PostgreSQL pour la gestion et la sécurisation de données en production." data-en="Python scripting for automation, SQL and PostgreSQL for production data management and security.">Scripting Python pour l'automatisation, SQL et PostgreSQL pour la gestion et la sécurisation de données en production.</p>
-      <div class="skill-pills"><span class="pill">Python</span><span class="pill">SQL</span><span class="pill">PostgreSQL</span><span class="pill">Bash</span></div>
+      <div class="skill-icon">🔐</div>
+      <div class="skill-name" data-fr="Sécurité" data-en="Security">Sécurité</div>
+      <p class="skill-desc" data-fr="PKI interne (autorité de certification, HTTPS, distribution de la confiance), SSH durci par clés ed25519, Fail2Ban, gestion des secrets. Certifié Cisco Network Security et Fortinet NSE 1 &amp; 2." data-en="Internal PKI (certificate authority, HTTPS, trust distribution), SSH hardened with ed25519 keys, Fail2Ban, secrets management. Cisco Network Security and Fortinet NSE 1 &amp; 2 certified.">PKI interne (autorité de certification, HTTPS, distribution de la confiance), SSH durci par clés ed25519, Fail2Ban, gestion des secrets. Certifié Cisco Network Security et Fortinet NSE 1 &amp; 2.</p>
+      <div class="skill-pills"><span class="pill">PKI / TLS</span><span class="pill">SSH ed25519</span><span class="pill">Fail2Ban</span><span class="pill">UFW</span><span class="pill">Ansible Vault</span><span class="pill">Fortinet NSE</span></div>
     </div>
   </div>
 </section>
 
+<!-- LABS -->
+<section id="labs">
+  <div class="section-header fade-up">
+    <h2 data-fr="Labs GitHub" data-en="GitHub Labs">Labs GitHub</h2>
+    <p data-fr="Projets personnels d'infrastructure, publiés et documentés" data-en="Personal infrastructure projects, published and documented">Projets personnels d'infrastructure, publiés et documentés</p>
+  </div>
+  <p class="labs-intro fade-up" data-fr="Chaque lab est un projet autonome sur mon GitHub : architecture inspirée de l'entreprise, déploiement 100 % automatisé et reproductible, README pensé pour être lu en 2 minutes, choix techniques justifiés et journal de bord de chaque problème rencontré." data-en="Each lab is a standalone project on my GitHub: enterprise-inspired architecture, fully automated and reproducible deployment, a README designed to be read in 2 minutes, justified technical choices and a log of every issue I ran into.">Chaque lab est un projet autonome sur mon GitHub : architecture inspirée de l'entreprise, déploiement 100 % automatisé et reproductible, README pensé pour être lu en 2 minutes, choix techniques justifiés et journal de bord de chaque problème rencontré.</p>
+  <div class="projects-grid">
+    <div class="project-card fade-up">
+      <div class="project-window-bar"><div class="win-dot"></div><div class="win-dot"></div><span class="win-filename">lab-cicd-pipeline/</span><span class="status done" data-fr="Terminé" data-en="Done">Terminé</span></div>
+      <div class="project-img-placeholder">🚀</div>
+      <div class="project-body">
+        <h3 class="project-title" data-fr="Chaîne CI/CD auto-hébergée" data-en="Self-hosted CI/CD chain">Chaîne CI/CD auto-hébergée</h3>
+        <p class="project-sub">Vagrant · VMware · Ansible · GitLab CE</p>
+        <ul class="lab-points" data-fr="&lt;li&gt;GitLab CE en HTTPS derrière une PKI interne, avec registre d'images privé et runner dédié&lt;/li&gt;&lt;li&gt;Pipeline complet : lint, tests, build, push de l'image, déploiement automatique en SSH et test de fumée&lt;/li&gt;&lt;li&gt;Amorçage de GitLab automatisé via l'API REST : jeton, projet et variables CI créés par Ansible&lt;/li&gt;&lt;li&gt;Reconstruction complète depuis zéro en 18 min, sans aucune action manuelle dans GitLab (contre 29 min au départ)&lt;/li&gt;&lt;li&gt;Idempotence validée et ansible-lint en profil production&lt;/li&gt;" data-en="&lt;li&gt;GitLab CE over HTTPS behind an internal PKI, with a private image registry and a dedicated runner&lt;/li&gt;&lt;li&gt;Full pipeline: lint, tests, build, image push, automatic SSH deployment and smoke test&lt;/li&gt;&lt;li&gt;GitLab bootstrap automated through the REST API: token, project and CI variables created by Ansible&lt;/li&gt;&lt;li&gt;Full rebuild from scratch in 18 min with zero manual action in GitLab (down from 29 min)&lt;/li&gt;&lt;li&gt;Idempotency validated and ansible-lint production profile passing&lt;/li&gt;"><li>GitLab CE en HTTPS derrière une PKI interne, avec registre d'images privé et runner dédié</li><li>Pipeline complet : lint, tests, build, push de l'image, déploiement automatique en SSH et test de fumée</li><li>Amorçage de GitLab automatisé via l'API REST : jeton, projet et variables CI créés par Ansible</li><li>Reconstruction complète depuis zéro en 18 min, sans aucune action manuelle dans GitLab (contre 29 min au départ)</li><li>Idempotence validée et ansible-lint en profil production</li></ul>
+        <div class="project-meta"><span class="project-tag">GitLab CI</span><span class="project-tag">Docker</span><span class="project-tag">PKI</span><span class="project-tag">Ansible Vault</span></div>
+        <a href="https://github.com/artuthur/lab-cicd-pipeline" target="_blank" class="btn-outline" data-fr="Voir sur GitHub →" data-en="View on GitHub →">Voir sur GitHub →</a>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-window-bar"><div class="win-dot"></div><div class="win-dot"></div><span class="win-filename">lab-infra-as-code/</span><span class="status done" data-fr="Terminé" data-en="Done">Terminé</span></div>
+      <div class="project-img-placeholder">🏗️</div>
+      <div class="project-body">
+        <h3 class="project-title" data-fr="Infrastructure 3-tiers en code" data-en="3-tier infrastructure as code">Infrastructure 3-tiers en code</h3>
+        <p class="project-sub">Vagrant · VirtualBox · Ansible · WSL2</p>
+        <ul class="lab-points" data-fr="&lt;li&gt;Architecture load balancer / serveurs web / base de données, provisionnée de bout en bout par Vagrant et Ansible&lt;/li&gt;&lt;li&gt;HAProxy en round-robin sur deux nœuds Nginx, validé par les tests&lt;/li&gt;&lt;li&gt;PostgreSQL accessible uniquement depuis les serveurs web : isolation réseau confirmée&lt;/li&gt;&lt;li&gt;Rôles Ansible aux conventions d'entreprise : groupes scalables, comptes d'administration dédiés, secrets séparés&lt;/li&gt;" data-en="&lt;li&gt;Load balancer / web servers / database architecture, provisioned end to end with Vagrant and Ansible&lt;/li&gt;&lt;li&gt;HAProxy round-robin across two Nginx nodes, validated by testing&lt;/li&gt;&lt;li&gt;PostgreSQL reachable only from the web servers: network isolation confirmed&lt;/li&gt;&lt;li&gt;Ansible roles following enterprise conventions: scalable groups, dedicated admin accounts, separated secrets&lt;/li&gt;"><li>Architecture load balancer / serveurs web / base de données, provisionnée de bout en bout par Vagrant et Ansible</li><li>HAProxy en round-robin sur deux nœuds Nginx, validé par les tests</li><li>PostgreSQL accessible uniquement depuis les serveurs web : isolation réseau confirmée</li><li>Rôles Ansible aux conventions d'entreprise : groupes scalables, comptes d'administration dédiés, secrets séparés</li></ul>
+        <div class="project-meta"><span class="project-tag">Ansible</span><span class="project-tag">HAProxy</span><span class="project-tag">Nginx</span><span class="project-tag">PostgreSQL</span></div>
+        <a href="https://github.com/artuthur" target="_blank" class="btn-outline" data-fr="Voir sur GitHub →" data-en="View on GitHub →">Voir sur GitHub →</a>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-window-bar"><div class="win-dot"></div><div class="win-dot"></div><span class="win-filename">lab-k8s-gitops/</span><span class="status wip" data-fr="En cours" data-en="In progress">En cours</span></div>
+      <div class="project-img-placeholder">☸️</div>
+      <div class="project-body">
+        <h3 class="project-title" data-fr="Cluster Kubernetes &amp; GitOps" data-en="Kubernetes cluster &amp; GitOps">Cluster Kubernetes &amp; GitOps</h3>
+        <p class="project-sub">kubeadm · Debian 12 · Vagrant · VMware</p>
+        <ul class="lab-points" data-fr="&lt;li&gt;Cluster Kubernetes multi-nœuds installé à la main avec kubeadm, sans distribution simplifiée, pour comprendre chaque composant&lt;/li&gt;&lt;li&gt;Étape 1 validée : VMs, réseau dédié et prérequis système de kubeadm&lt;/li&gt;&lt;li&gt;Prochaine étape : runtime containerd, puis kubeadm, kubelet et kubectl&lt;/li&gt;&lt;li&gt;Objectif final : déploiements pilotés par Git (GitOps)&lt;/li&gt;" data-en="&lt;li&gt;Multi-node Kubernetes cluster installed by hand with kubeadm, no simplified distribution, to understand every component&lt;/li&gt;&lt;li&gt;Step 1 validated: VMs, dedicated network and kubeadm system prerequisites&lt;/li&gt;&lt;li&gt;Next step: containerd runtime, then kubeadm, kubelet and kubectl&lt;/li&gt;&lt;li&gt;End goal: Git-driven deployments (GitOps)&lt;/li&gt;"><li>Cluster Kubernetes multi-nœuds installé à la main avec kubeadm, sans distribution simplifiée, pour comprendre chaque composant</li><li>Étape 1 validée : VMs, réseau dédié et prérequis système de kubeadm</li><li>Prochaine étape : runtime containerd, puis kubeadm, kubelet et kubectl</li><li>Objectif final : déploiements pilotés par Git (GitOps)</li></ul>
+        <div class="project-meta"><span class="project-tag">Kubernetes</span><span class="project-tag">kubeadm</span><span class="project-tag">containerd</span><span class="project-tag">GitOps</span></div>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-window-bar"><div class="win-dot"></div><div class="win-dot"></div><span class="win-filename">roadmap.md</span><span class="status" data-fr="À venir" data-en="Upcoming">À venir</span></div>
+      <div class="project-img-placeholder">🗺️</div>
+      <div class="project-body">
+        <h3 class="project-title" data-fr="Prochains labs" data-en="Upcoming labs">Prochains labs</h3>
+        <p class="project-sub" data-fr="Feuille de route" data-en="Roadmap">Feuille de route</p>
+        <ul class="roadmap-list">
+          <li><span>lab-terraform-cloud</span><span data-fr="Provisionning cloud" data-en="Cloud provisioning">Provisionning cloud</span></li>
+          <li><span>lab-hardening-monitoring</span><span data-fr="Durcissement &amp; supervision" data-en="Hardening &amp; monitoring">Durcissement &amp; supervision</span></li>
+          <li><span>lab-attack-defense</span><span data-fr="Attaque / défense" data-en="Attack / defense">Attaque / défense</span></li>
+          <li><span data-fr="Labs réseau" data-en="Network labs">Labs réseau</span><span data-fr="À définir" data-en="To be defined">À définir</span></li>
+        </ul>
+        <a href="https://github.com/artuthur" target="_blank" class="btn-outline" data-fr="Suivre sur GitHub →" data-en="Follow on GitHub →">Suivre sur GitHub →</a>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- PROJECTS -->
 <section id="projects">
   <div class="section-header fade-up">
-    <h2 data-fr="Expériences &amp; Projets" data-en="Experience &amp; Projects">Expériences &amp; Projets</h2>
+    <h2 data-fr="Parcours" data-en="Experience">Parcours</h2>
     <p data-fr="Stages professionnels et réalisations techniques en formation" data-en="Professional internships and technical projects from training">Stages professionnels et réalisations techniques en formation</p>
   </div>
   <div class="projects-grid">
@@ -384,7 +463,7 @@
   </div>
   <div class="cv-right">
     <div class="cv-doc">
-      <div class="cv-doc-top"><span class="cv-doc-icon">📄</span><span class="cv-doc-title">CV_DEBACQ_Arthur</span></div>
+      <div class="cv-doc-top"><span class="cv-doc-icon">📄</span><span class="cv-doc-title">CV_DEBACQ_Arthur.pdf</span></div>
       <div class="cv-doc-line full"></div>
       <div class="cv-doc-line short"></div>
       <div class="cv-doc-line medium" style="margin-top:14px"></div>
@@ -404,7 +483,7 @@
     <p data-fr="Une offre, une question, une opportunité de collaboration ? Je suis disponible et réactif. N'hésitez pas à m'écrire, je vous répondrai dans les plus brefs délais." data-en="A job offer, a question, a collaboration opportunity? I'm available and responsive. Don't hesitate to reach out, I'll get back to you promptly.">Une offre, une question, une opportunité de collaboration ? Je suis disponible et réactif. N'hésitez pas à m'écrire, je vous répondrai dans les plus brefs délais.</p>
     <div class="contact-links">
       <a class="contact-link" href="mailto:arthur.debacq@hotmail.fr">✉ arthur.debacq@hotmail.fr</a>
-      <a class="contact-link" href="https://www.linkedin.com/in/arthur-debacq-a17143233/" target="_blank">🔗 linkedin.com/in/arthur-debacq-a17143233/</a>
+      <a class="contact-link" href="https://linkedin.com/in/arthur-debacq-a17143233/" target="_blank">🔗 linkedin.com/in/arthur-debacq</a>
       <a class="contact-link" href="https://github.com/artuthur" target="_blank">💻 github.com/artuthur</a>
     </div>
   </div>
@@ -435,7 +514,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <span>© 2025 Arthur Debacq</span>
+  <span>© 2026 Arthur Debacq</span>
   <span data-fr="Portfolio — Systèmes &amp; Réseaux" data-en="Portfolio — Systems &amp; Networks">Portfolio — Systèmes &amp; Réseaux</span>
   <a href="#hero" data-fr="↑ Retour en haut" data-en="↑ Back to top">↑ Retour en haut</a>
 </footer>
@@ -521,8 +600,7 @@
     }
   }
 
-  /* ACTIVE NAV */
-  const sections = ['hero','about','skills','projects','cv','contact'];
+  const sections = ['hero','about','skills','labs','projects','cv','contact'];
   const navLinks = document.querySelectorAll('.nav-links a');
   window.addEventListener('scroll', () => {
     let current = 'hero';
